@@ -1,0 +1,60 @@
+class Person {
+	constructor(name, parent = null) {
+		this.name = name
+		this.parent = parent
+		this.drawPosition = null
+	}
+
+	// Get a list of all this person's children
+	findChildren(relatives) {
+		let children = []
+		relatives.forEach(person => {
+			if (person.parent == this) {
+				children.push(person)
+			}
+		})
+		return children
+	}
+	
+	// Get a list of this person's ancestors, ordered from youngest to oldest
+	getLineage() {
+		let ancestors = []
+		let currentParent = this.parent
+		while(currentParent) {
+			ancestors.push(currentParent)
+			currentParent = currentParent.parent
+		}
+		return ancestors
+	}
+	
+	depthToAncestor(ancestor) {
+		if (ancestor == this) {
+			return 0
+		}
+		let lineage = this.getLineage()
+		let depth = lineage.findIndex(person => person == ancestor)
+		if (depth >= 0) {
+			return depth + 1
+		}
+		return -1
+	}
+	
+	// Draw the person on the screen at the given position
+	draw(x, y) {
+		// save our drawn position in case anyone needs it.
+		if (x && y) {
+			this.drawPosition = createVector(x, y)
+		}
+		
+		if (this.drawPosition) {			
+			push()
+			textAlign(CENTER, CENTER)
+			textStyle(BOLD)
+			fill('rgb(243,208,208)')
+			rect(x - 30, y - 10, 60, 20)
+			fill('black')
+			text(`${this.name}`, this.drawPosition.x, this.drawPosition.y)
+			pop()
+		}
+	}
+}
