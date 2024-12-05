@@ -1,0 +1,44 @@
+let john = new Person('John')
+let paul = new Person('Paul', john)
+let peter = new Person('Peter', john)
+let sarah = new Person('Sarah', john)
+let mike = new Person('Mike', john)
+let chris = new Person('Christopher', sarah)
+let charles = new Person('Charles', sarah)
+let sue = new Person('Sue', sarah)
+let dave = new Person('Dave', peter)
+let kevin = new Person('Kevin', dave)
+let tom = new Person('Tom', peter)
+let tim = new Person('Tim', charles)
+let jim = new Person('Jim', tim)
+let jasper = new Person('Jasper', paul)
+let steve = new Person('steve', jasper)
+let kim = new Person('Kim', jasper)
+
+
+let family = [kim, steve, jasper, kevin, jim, john, paul, peter, sarah, chris, mike, charles, sue, dave, tom, tim]
+
+function setup() {
+	createCanvas(windowWidth, windowHeight)
+	drawFamilyTree(family)
+
+	// Select 2 people in the family
+	let a = random(family)
+	let b = random(family)
+
+	// Visualize the relationship in the tree
+	drawRelationshipBetween(a, b)
+	a.draw()
+	b.draw()
+	
+	// Some example of visualizing the properties of the relations between a and b
+	print(`${a.name}'s lineage is '${a.getLineage().map(person => person.name).join('->')}'`)
+	print(`${b.name}'s lineage is '${b.getLineage().map(person => person.name).join('->')}'`)
+	print(`${b.name}'s depth to ${a.name}'s is ${b.depthToAncestor(a)}`)
+
+	// Figure out the relationship and print it out
+	print(`How is ${a.name} related to ${b.name}?`)
+	let relationship = calculateRelationShipBetween(a, b)
+	print(`${a.name} is the ${relationship} of ${b.name}`)
+}
+
